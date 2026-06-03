@@ -5,7 +5,7 @@ import requests
 
 RSS_URL = "https://osmanomics.github.io/my-rss-feed/feed.xml"  # Ensure this points to your raw XML feed
 DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY")
-DEEPSEEK_ENDPOINT = "https://api.deepseek.com/v1/chat/completions"
+DEEPSEEK_ENDPOINT = "https://api.deepseek.com/chat/completions"
 DATA_FILE = "data.json"
 
 CATEGORY_MAPPING = {
