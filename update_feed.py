@@ -3,7 +3,7 @@ import json
 import feedparser
 import requests
 
-RSS_URL = "https://osmanomics.github.io/my-rss-feed/feed.xml"  # Ensure this points to your raw XML feed
+RSS_URL = "https://osmanomics.github.io/my-rss-feed/feed.xml"
 DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY")
 DEEPSEEK_ENDPOINT = "https://api.deepseek.com/chat/completions"
 DATA_FILE = "data.json"
