@@ -6,10 +6,10 @@
     <style>
         body { 
             font-family: system-ui, sans-serif; 
-            font-size: 14px; /* Reduced base font size */
+            font-size: 14px; 
             margin: 20px; 
-            background: #121212; /* Deep charcoal instead of stark black */
-            color: #e0e0e0; /* Off-white text to reduce halation/eye strain */
+            background: #121212; 
+            color: #e0e0e0; 
         }
         .dashboard { 
             display: flex; 
@@ -20,7 +20,7 @@
         .column { 
             background: #121212; 
             padding: 20px; 
-            border: 1px solid #333333; /* Muted gray borders */
+            border: 1px solid #333333; 
             border-radius: 8px; 
         }
         .column-title { 
@@ -28,12 +28,19 @@
             font-weight: bold; 
             margin-bottom: 15px; 
             padding-bottom: 5px; 
-            border-bottom: 2px solid #333333; /* Muted gray dividers */
+            border-bottom: 2px solid #333333; 
         }
         .item { 
             margin-bottom: 12px; 
             padding-bottom: 12px; 
             border-bottom: 1px solid #333333; 
+        }
+        .item-header {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 6px;
         }
         .item a { 
             color: #e0e0e0; 
@@ -42,17 +49,25 @@
         }
         .item a:hover { 
             text-decoration: underline; 
-            color: #ffffff; /* Slight brighten on hover for feedback */
+            color: #ffffff; 
         }
         .tag { 
             display: inline-block; 
             font-size: 0.75rem; 
             padding: 2px 6px; 
             border-radius: 4px; 
-            background: #2a2a2a; /* Lighter gray for tags */
+            background: #2a2a2a; 
             color: #e0e0e0;
-            margin-left: 8px; 
             font-weight: bold;
+        }
+        .meta-dates {
+            font-size: 0.8rem;
+            color: #999999; /* Muted gray to visually separate it from the title */
+            display: flex;
+            gap: 15px;
+        }
+        .meta-dates span strong {
+            color: #c0c0c0; /* Slightly brighter for the label */
         }
     </style>
 </head>
@@ -102,10 +117,26 @@
                 }
 
                 data.forEach(item => {
+                    // Build the dates HTML only if the data exists
+                    let dateHtml = '';
+                    if (item.noticeDate || item.dueDate) {
+                        dateHtml = '<div class="meta-dates">';
+                        if (item.noticeDate) {
+                            dateHtml += `<span><strong>Notice:</strong> ${item.noticeDate}</span>`;
+                        }
+                        if (item.dueDate) {
+                            dateHtml += `<span><strong>Due:</strong> ${item.dueDate}</span>`;
+                        }
+                        dateHtml += '</div>';
+                    }
+
                     const html = `
                         <div class="item">
-                            <a href="${item.link}" target="_blank">${item.title}</a>
-                            <span class="tag">${item.category}</span>
+                            <div class="item-header">
+                                <a href="${item.link}" target="_blank">${item.title}</a>
+                                <span class="tag">${item.category}</span>
+                            </div>
+                            ${dateHtml}
                         </div>
                     `;
                     
