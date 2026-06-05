@@ -6,9 +6,10 @@
     <style>
         body { 
             font-family: system-ui, sans-serif; 
+            font-size: 14px; /* Reduced base font size */
             margin: 20px; 
-            background: #000000; 
-            color: #ffffff; 
+            background: #121212; /* Deep charcoal instead of stark black */
+            color: #e0e0e0; /* Off-white text to reduce halation/eye strain */
         }
         .dashboard { 
             display: flex; 
@@ -17,9 +18,9 @@
             margin-bottom: 40px;
         }
         .column { 
-            background: #000000; 
+            background: #121212; 
             padding: 20px; 
-            border: 1px solid #ffffff;
+            border: 1px solid #333333; /* Muted gray borders */
             border-radius: 8px; 
         }
         .column-title { 
@@ -27,28 +28,29 @@
             font-weight: bold; 
             margin-bottom: 15px; 
             padding-bottom: 5px; 
-            border-bottom: 2px solid #ffffff; 
+            border-bottom: 2px solid #333333; /* Muted gray dividers */
         }
         .item { 
             margin-bottom: 12px; 
             padding-bottom: 12px; 
-            border-bottom: 1px solid #ffffff; 
+            border-bottom: 1px solid #333333; 
         }
         .item a { 
-            color: #ffffff; 
+            color: #e0e0e0; 
             text-decoration: none; 
             font-weight: 500; 
         }
         .item a:hover { 
             text-decoration: underline; 
+            color: #ffffff; /* Slight brighten on hover for feedback */
         }
         .tag { 
             display: inline-block; 
             font-size: 0.75rem; 
             padding: 2px 6px; 
             border-radius: 4px; 
-            background: #ffffff; 
-            color: #000000;
+            background: #2a2a2a; /* Lighter gray for tags */
+            color: #e0e0e0;
             margin-left: 8px; 
             font-weight: bold;
         }
@@ -75,7 +77,6 @@
         </div>
     </div>
 
-    <!-- News Stream moved to the bottom -->
     <rssapp-feed id="_y0uTgPk92tFxD735"></rssapp-feed>
     <script src="https://widget.rss.app/v1/feed.js" type="text/javascript" async></script>
 
