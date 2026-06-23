@@ -10,9 +10,10 @@ from email.mime.multipart import MIMEMultipart
 # --- Configuration ---
 DATA_FILE = "data.json"
 RECIPIENT_EMAILS = [
-    "dylan.osmane@abbvie.com",
-    "marieclaude.robidoux@abbvie.com",
-    "rpicanada@abbvie.com"
+    
+    "annie.chicoine@abbvie.com",
+    "judith.mergl@abbvie.com",
+    "navjotkaur.jaswal@abbvie.com"
 ]
 
 
