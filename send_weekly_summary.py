@@ -7,8 +7,14 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 # --- Configuration ---
+# --- Configuration ---
 DATA_FILE = "data.json"
-RECIPIENT_EMAIL = "dylan.osmane@abbvie.com"
+RECIPIENT_EMAILS = [
+    "dylan.osmane@abbvie.com",
+    "marieclaude.robidoux@abbvie.com",
+    "rpicanada@abbvie.com"
+]
+
 
 # These will be securely loaded from GitHub Secrets
 SENDER_EMAIL = os.environ.get("SENDER_EMAIL")
@@ -98,20 +104,26 @@ def send_email(subject, html_body):
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
     msg["From"] = SENDER_EMAIL
-    msg["To"] = RECIPIENT_EMAIL
+    
+    # Joins the list of emails into a single comma-separated string for the header
+    msg["To"] = ", ".join(RECIPIENT_EMAILS)
 
     msg.attach(MIMEText(html_body, "html"))
 
     # Connect to Gmail's SMTP server
     try:
-        print("Connecting to SMTP server...")
+        print(f"Connecting to SMTP server to send to {len(RECIPIENT_EMAILS)} recipients...")
         server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
         server.login(SENDER_EMAIL, SENDER_PASSWORD)
-        server.sendmail(SENDER_EMAIL, RECIPIENT_EMAIL, msg.as_string())
+        
+        # Pass the list of RECIPIENT_EMAILS to the sendmail function
+        server.sendmail(SENDER_EMAIL, RECIPIENT_EMAILS, msg.as_string())
         server.quit()
-        print("Email sent successfully!")
+        print("Email sent successfully to all recipients!")
     except Exception as e:
         print(f"Failed to send email: {e}")
+        raise # Ensures GitHub Actions registers the failure
+
         raise # Ensures GitHub Actions registers the failure
 
 if __name__ == "__main__":
