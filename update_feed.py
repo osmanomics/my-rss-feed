@@ -17,7 +17,8 @@ RSS_URLS = [
     "https://www.canada.ca/content/dam/hc-sc/migration/hc-sc/rss/dhp-mps/new-neuf-eng.xml",
     "https://www.canada.ca/content/dam/hc-sc/migration/hc-sc/rss/dhp-mps/compli-conform-eng.xml",
     "https://www.canada.ca/content/dam/hc-sc/migration/hc-sc/rss/dhp-mps/prod-eng.xml",
-    "https://recalls-rappels.canada.ca/en/feed/medical-devices-alerts-recalls"
+    "https://recalls-rappels.canada.ca/en/feed/medical-devices-alerts-recalls",
+    ""https://www.canada.ca/content/dam/hc-sc/migration/hc-sc/rss/dhp-mps/new-neuf-eng.xml    
 ]
 DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY")
 DEEPSEEK_ENDPOINT = "https://api.deepseek.com/chat/completions"
