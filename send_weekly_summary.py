@@ -8,7 +8,7 @@ from email.mime.multipart import MIMEMultipart
 
 # --- Configuration ---
 # Update this if your feed has a specific XML path (e.g., /feed.xml or /index.xml)
-FEED_URL = "https://osmanomics.github.io/my-rss-feed/" 
+FEED_URL = "https://osmanomics.github.io/my-rss-feed/.xml" 
 RECIPIENT_EMAIL = "dylan.osmane@abbvie.com"
 
 # These will be securely loaded from GitHub Secrets
