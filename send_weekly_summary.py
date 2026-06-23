@@ -1,33 +1,32 @@
-import feedparser
-import smtplib
-import os
-import time
-from datetime import datetime, timedelta, timezone
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-
-# --- Configuration ---
-# Update this if your feed has a specific XML path (e.g., /feed.xml or /index.xml)
-FEED_URL = "https://osmanomics.github.io/my-rss-feed/.xml" 
-RECIPIENT_EMAIL = "dylan.osmane@abbvie.com"
-
-# These will be securely loaded from GitHub Secrets
-SENDER_EMAIL = os.environ.get("SENDER_EMAIL")
-SENDER_PASSWORD = os.environ.get("SENDER_PASSWORD")
-
 def main():
     print(f"Fetching RSS feed from {FEED_URL}...")
     feed = feedparser.parse(FEED_URL)
+    
+    # Debugging information to see what feedparser actually downloaded
+    print(f"Total entries found in feed: {len(feed.entries)}")
+    
+    if len(feed.entries) > 0:
+        first = feed.entries[0]
+        print("--- DEBUG: First Entry Data ---")
+        print(f"Title: {first.get('title', 'No title found')}")
+        print(f"Published (raw): {first.get('published', 'No published field')}")
+        print(f"Updated (raw): {first.get('updated', 'No updated field')}")
+        print("-------------------------------")
     
     recent_entries = []
     now = datetime.now(timezone.utc)
     
     # Filter entries from the last 7 days
     for entry in feed.entries:
-        if hasattr(entry, 'published_parsed') and entry.published_parsed:
-            published_dt = datetime.fromtimestamp(time.mktime(entry.published_parsed), timezone.utc)
+        # Check for both 'published_parsed' (RSS) and 'updated_parsed' (Atom)
+        parsed_time = entry.get('published_parsed') or entry.get('updated_parsed')
+        
+        if parsed_time:
+            published_dt = datetime.fromtimestamp(time.mktime(parsed_time), timezone.utc)
             if now - published_dt <= timedelta(days=7):
                 recent_entries.append(entry)
+        else:
+            print(f"Could not find a valid date for entry: {entry.get('title', 'Unknown')}")
                 
     if not recent_entries:
         print("No new entries found for the past week. Exiting.")
@@ -45,10 +44,12 @@ def main():
     """
     
     for entry in recent_entries:
-        title = entry.title if hasattr(entry, 'title') else 'No Title'
-        link = entry.link if hasattr(entry, 'link') else '#'
-        published = entry.published if hasattr(entry, 'published') else 'Unknown Date'
-        # Fetches tags/categories if your RSS feed provides them
+        title = entry.get('title', 'No Title')
+        link = entry.get('link', '#')
+        
+        # Grab whichever date is available for the email body
+        published = entry.get('published') or entry.get('updated') or 'Unknown Date'
+        
         categories = ", ".join([tag.term for tag in entry.tags]) if hasattr(entry, 'tags') else 'Uncategorized'
         
         body += f"<li style='margin-bottom: 15px;'>"
@@ -60,27 +61,3 @@ def main():
     body += "</ul></body></html>"
     
     send_email(subject, body)
-
-def send_email(subject, html_body):
-    msg = MIMEMultipart("alternative")
-    msg["Subject"] = subject
-    msg["From"] = SENDER_EMAIL
-    msg["To"] = RECIPIENT_EMAIL
-
-    msg.attach(MIMEText(html_body, "html"))
-
-    # Connect to Gmail's SMTP server
-    try:
-        print("Connecting to SMTP server...")
-        # If using a different provider, change 'smtp.gmail.com' and the port (465 for SSL)
-        server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
-        server.login(SENDER_EMAIL, SENDER_PASSWORD)
-        server.sendmail(SENDER_EMAIL, RECIPIENT_EMAIL, msg.as_string())
-        server.quit()
-        print("Email sent successfully!")
-    except Exception as e:
-        print(f"Failed to send email: {e}")
-        raise # Ensures GitHub Actions registers the failure
-
-if __name__ == "__main__":
-    main()
