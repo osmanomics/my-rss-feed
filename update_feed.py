@@ -151,6 +151,7 @@ def is_non_abbvie_product_mentioned(title, summary):
     print(f"  -> Non-AbbVie product(s) detected: {named} – marking NOT TRACKED")
     return True
 
+
 def load_existing_data():
     if os.path.exists(DATA_FILE):
         try:
@@ -159,6 +160,7 @@ def load_existing_data():
         except:
             return []
     return []
+
 
 def classify_regulatory_update(title, summary):
     prompt = f"""You are an expert regulatory affairs classifier for a pharmaceutical company.
@@ -175,7 +177,7 @@ Summary: {summary}"""
             {"role": "system", "content": "You are a strict data classification AI. You output only exact strings from a provided list."},
             {"role": "user", "content": prompt}
         ],
-        "temperature": 0.0 
+        "temperature": 0.0
     }
     try:
         response = requests.post(DEEPSEEK_ENDPOINT, headers=headers, json=payload, timeout=15)
@@ -184,6 +186,67 @@ Summary: {summary}"""
     except Exception as e:
         print(f"API Error: {e}")
         return "Unclassified"
+
+
+# ---------------------------------------------------------------------------
+# NEW: Canada Gazette LLM-based relevance + classification
+# ---------------------------------------------------------------------------
+def classify_gazette_update(title, summary):
+    """
+    For Canada Gazette entries, ask the LLM:
+      1. Does this article impact AbbVie (pharmaceuticals/biologics/devices)?
+      2. If yes, which category does it fall under?
+
+    Returns a (category, action) tuple.
+    """
+    prompt = f"""You are an expert regulatory affairs specialist at AbbVie, a research-based pharmaceutical company.
+
+A new Canada Gazette article has been published. Your job is two-fold:
+1. Determine if this article is relevant to AbbVie's business (pharmaceuticals, biologics, biosimilars, medical devices, clinical trials, drug regulations, manufacturing/GMP, pharmacovigilance, OTC drugs, or related regulatory frameworks).
+2. If relevant, classify it into EXACTLY ONE category from this list: {ALLOWED_CATEGORIES}
+
+Reply ONLY with a valid JSON object in this exact format:
+{{"impacts_abbvie": true/false, "reason": "one-line explanation", "category": "CATEGORY_NAME or null if not relevant"}}
+
+Title: {title}
+Summary: {summary}"""
+
+    headers = {"Authorization": f"Bearer {DEEPSEEK_API_KEY}", "Content-Type": "application/json"}
+    payload = {
+        "model": "deepseek-chat",
+        "messages": [
+            {"role": "system", "content": "You are a strict JSON-output AI. Reply ONLY with a valid JSON object, no markdown."},
+            {"role": "user", "content": prompt}
+        ],
+        "temperature": 0.0
+    }
+    try:
+        response = requests.post(DEEPSEEK_ENDPOINT, headers=headers, json=payload, timeout=15)
+        raw = response.json()["choices"][0]["message"]["content"].strip()
+        # Strip markdown code fences if present
+        raw = re.sub(r'^```[a-z]*\n?', '', raw).rstrip('`').strip()
+        result = json.loads(raw)
+    except Exception as e:
+        print(f"Gazette classification API error: {e}")
+        # On failure, fall through to regular classification rather than silently dropping
+        category = classify_regulatory_update(title, summary)
+        return category, CATEGORY_MAPPING.get(category, "Manual Review")
+
+    if not result.get("impacts_abbvie", False):
+        reason = result.get("reason", "No reason provided")
+        print(f"  -> Gazette item not relevant to AbbVie ({reason}) – marking NOT TRACKED")
+        return "Not tracked (Canada Gazette – not AbbVie relevant)", "Not tracked"
+
+    category = result.get("category")
+    reason = result.get("reason", "")
+    print(f"  -> Gazette item IS relevant to AbbVie ({reason}) – category: {category}")
+
+    if category not in CATEGORY_MAPPING:
+        print(f"  -> Unrecognized category '{category}' – falling back to standard classifier")
+        category = classify_regulatory_update(title, summary)
+
+    return category, CATEGORY_MAPPING.get(category, "Manual Review")
+
 
 def parse_date(date_str):
     if not date_str:
@@ -197,11 +260,12 @@ def parse_date(date_str):
         except:
             return datetime.min
 
+
 def main():
     existing_items = load_existing_data()
     # Create a quick lookup of existing titles or links to avoid re-processing and wasting API costs
     existing_links = {item['link'] for item in existing_items}
-    
+
     new_items = []
 
     for url in RSS_URLS:
@@ -212,24 +276,26 @@ def main():
             link = entry.get('link', '')
             if link in existing_links:
                 continue  # Already processed in a past run
-                
+
             title = entry.title
             summary = entry.get('summary', entry.get('description', ''))
-            
+
             print(f"Processing new item: {title}")
 
-            # Pre-classification filter: Canada Gazette items are not tracked.
-            if "canada gazette" in title.lower():
-                print("  -> Canada Gazette item – marking NOT TRACKED")
-                category = "Not tracked (Canada Gazette)"
-                action = "Not tracked"
+            # Detect Canada Gazette items by title OR by URL origin
+            is_gazette = "canada gazette" in title.lower() or "gazette.gc.ca" in link.lower()
+
+            if is_gazette:
+                print("  -> Canada Gazette item – asking LLM to assess AbbVie relevance...")
+                category, action = classify_gazette_update(title, summary)
             else:
                 category = classify_regulatory_update(title, summary)
                 action = CATEGORY_MAPPING.get(category, "Manual Review")
 
                 # Post-triage product filter: if a non-AbbVie product is explicitly
                 # mentioned and none of AbbVie's products are referenced, override.
-                if action != "Not tracked":  # skip items already categorised as not tracked
+                # (Gazette items already have their own relevance check – skip them here)
+                if action != "Not tracked":
                     if is_non_abbvie_product_mentioned(title, summary):
                         category = "Not tracked (non-AbbVie product)"
                         action = "Not tracked"
@@ -241,16 +307,17 @@ def main():
                 "category": category,
                 "action": action
             })
-    
+
     # Prepend new items to the front of the archive
     updated_data = new_items + existing_items
-    
+
     # Sort chronologically, latest release at the top
     updated_data.sort(key=lambda x: parse_date(x.get('pubDate', '')), reverse=True)
-    
+
     with open(DATA_FILE, 'w') as f:
         json.dump(updated_data, f, indent=2)
     print(f"Done! Added {len(new_items)} new items.")
+
 
 if __name__ == "__main__":
     main()
