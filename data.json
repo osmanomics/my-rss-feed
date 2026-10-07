@@ -1,5 +1,110 @@
 [
   {
+    "title": "Guide to reporting and providing information on drug shortages and discontinuations (GUI-0120)",
+    "link": "https://www.canada.ca/en/health-canada/services/drugs-health-products/drug-products/applications-submissions/guidance-documents/guide-reporting-providing-information-drug-shortages-discontinuations-0120.html",
+    "pubDate": "2026-10-07T16:00:00-04:00",
+    "category": "Drug Supply",
+    "action": "Track and inform"
+  },
+  {
+    "title": "Guide to distributing drugs intended for the Canadian market for consumption or use outside Canada (GUI-0145)",
+    "link": "https://www.canada.ca/en/health-canada/services/drugs-health-products/drug-products/applications-submissions/guidance-documents/guide-distributing-drugs-intended-canadian-market-consumption-use-outside-canada-0145.html",
+    "pubDate": "2026-10-07T16:00:00-04:00",
+    "category": "Drug",
+    "action": "Track & assess"
+  },
+  {
+    "title": "Guide on the exceptional importation and sale of drugs in response to shortages and discontinuations (GUI-0148)",
+    "link": "https://www.canada.ca/en/health-canada/services/drugs-health-products/drug-products/applications-submissions/guidance-documents/guide-exceptional-importation-sale-drugs-response-shortages-discontinuations-0148.html",
+    "pubDate": "2026-10-07T16:00:00-04:00",
+    "category": "Drug Supply",
+    "action": "Track and inform"
+  },
+  {
+    "title": "Guide on extending expiration dates of marketed drugs in response to drug shortages (GUI-0500)",
+    "link": "https://www.canada.ca/en/health-canada/services/drugs-health-products/drug-products/applications-submissions/guidance-documents/guide-extending-expiration-dates-marketed-drugs-response-shortages-0500.html",
+    "pubDate": "2026-10-07T16:00:00-04:00",
+    "category": "Drug Supply",
+    "action": "Track and inform"
+  },
+  {
+    "title": "Guide to reporting and providing information on drug shortages and discontinuations (GUI-0120)",
+    "link": "https://www.canada.ca/en/health-canada/services/drugs-health-products/drug-products/applications-submissions/guidance-documents/guide-reporting-providing-information-drug-shortages-discontinuations-0120.html",
+    "pubDate": "2026-10-07T15:30:00-05:00",
+    "category": "Drug Supply",
+    "action": "Track and inform"
+  },
+  {
+    "title": "Guide to reporting and providing information on medical device shortages and discontinuations (GUI-0137)",
+    "link": "https://www.canada.ca/en/health-canada/services/drugs-health-products/medical-devices/application-information/guidance-documents/guide-reporting-providing-information-medical-device-shortages-discontinuations-0137.html",
+    "pubDate": "2026-10-07T15:30:00-05:00",
+    "category": "MD (medical devices)",
+    "action": "Track & assess"
+  },
+  {
+    "title": "Guide to distributing drugs intended for the Canadian market for consumption or use outside Canada (GUI-0145)",
+    "link": "https://www.canada.ca/en/health-canada/services/drugs-health-products/drug-products/applications-submissions/guidance-documents/guide-distributing-drugs-intended-canadian-market-consumption-use-outside-canada-0145.html",
+    "pubDate": "2026-10-07T15:30:00-05:00",
+    "category": "Drug",
+    "action": "Track & assess"
+  },
+  {
+    "title": "Guide on the exceptional importation and sale of medical devices in response to shortages (GUI-0147)",
+    "link": "https://www.canada.ca/en/health-canada/services/drugs-health-products/medical-devices/application-information/guidance-documents/guide-exceptional-importation-sale-medical-devices-response-shortages-0147.html",
+    "pubDate": "2026-10-07T15:30:00-05:00",
+    "category": "MD (medical devices)",
+    "action": "Track & assess"
+  },
+  {
+    "title": "Guide on the exceptional importation and sale of drugs in response to shortages and discontinuations (GUI-0148)",
+    "link": "https://www.canada.ca/en/health-canada/services/drugs-health-products/drug-products/applications-submissions/guidance-documents/guide-exceptional-importation-sale-drugs-response-shortages-discontinuations-0148.html",
+    "pubDate": "2026-10-07T15:30:00-05:00",
+    "category": "Drug Supply",
+    "action": "Track and inform"
+  },
+  {
+    "title": "Guide on extending expiration dates of marketed drugs in response to drug shortages (GUI-0500)",
+    "link": "https://www.canada.ca/en/health-canada/services/drugs-health-products/drug-products/applications-submissions/guidance-documents/guide-extending-expiration-dates-marketed-drugs-response-shortages-0500.html",
+    "pubDate": "2026-10-07T15:30:00-05:00",
+    "category": "Drug Supply",
+    "action": "Track and inform"
+  },
+  {
+    "title": "Guide to reporting and providing information on medical device shortages and discontinuations (GUI-0137)",
+    "link": "https://www.canada.ca/en/health-canada/services/drugs-health-products/medical-devices/application-information/guidance-documents/guide-reporting-providing-information-medical-device-shortages-discontinuations-0137.html",
+    "pubDate": "2026-10-07T15:00:00-04:00",
+    "category": "MD (medical devices)",
+    "action": "Track & assess"
+  },
+  {
+    "title": "Guide on the exceptional importation and sale of medical devices in response to shortages (GUI-0147)",
+    "link": "https://www.canada.ca/en/health-canada/services/drugs-health-products/medical-devices/application-information/guidance-documents/guide-exceptional-importation-sale-medical-devices-response-shortages-0147.html",
+    "pubDate": "2026-10-07T15:00:00-04:00",
+    "category": "MD (medical devices)",
+    "action": "Track & assess"
+  },
+  {
+    "title": "Perma-Sharp Sutures",
+    "link": "https://recalls-rappels.canada.ca/en/alert-recall/perma-sharp-sutures",
+    "pubDate": "2026-10-07T12:00:00",
+    "category": "Not tracked (non-AbbVie product)",
+    "action": "Not tracked"
+  },
+  {
+    "title": "Perma-Sharp Sutures",
+    "link": "https://recalls-rappels.canada.ca/en/alert-recall/perma-sharp-sutures",
+    "pubDate": "2026-10-07T12:00:00",
+    "category": "Not tracked (non-AbbVie product)",
+    "action": "Not tracked"
+  },
+  {
+    "title": "Canada Gazette - Part II, October 7, 2026, volume 159, number 20",
+    "link": "https://gazette.gc.ca/rp-pr/p2/2026/2026-10-07/html/index-eng.html",
+    "pubDate": "Wed, 07 Oct 2026 09:00:00 -0500",
+    "category": "Not tracked (Canada Gazette \u2013 not AbbVie relevant)",
+    "action": "Not tracked"
+  },
+  {
     "title": "Fluoroplastic Vent Tube",
     "link": "https://recalls-rappels.canada.ca/en/alert-recall/fluoroplastic-vent-tube",
     "pubDate": "2026-10-06T12:00:00",
