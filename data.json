@@ -1,5 +1,12 @@
 [
   {
+    "title": "List of recognized standards for medical devices",
+    "link": "https://www.canada.ca/en/health-canada/services/drugs-health-products/medical-devices/standards/list-recognized.html",
+    "pubDate": "2026-11-02T16:00:00-05:00",
+    "category": "MD (medical devices)",
+    "action": "Track & assess"
+  },
+  {
     "title": "CWP 800 Systems",
     "link": "https://recalls-rappels.canada.ca/en/alert-recall/cwp-800-systems",
     "pubDate": "2026-11-02T12:00:00",
@@ -18,6 +25,13 @@
     "link": "https://gazette.gc.ca/rp-pr/p1/2026/2026-10-31/html/index-eng.html",
     "pubDate": "Sat, 31 Oct 2026 14:00:00 -0500",
     "category": "Not tracked (Canada Gazette \u2013 not AbbVie relevant)",
+    "action": "Not tracked"
+  },
+  {
+    "title": "Cyclophosphamide for Injection USP: Presence of particulate matter",
+    "link": "https://recalls-rappels.canada.ca/en/alert-recall/cyclophosphamide-injection-usp-presence-particulate-matter",
+    "pubDate": "2026-10-30T12:00:00",
+    "category": "Not tracked (non-AbbVie product)",
     "action": "Not tracked"
   },
   {
